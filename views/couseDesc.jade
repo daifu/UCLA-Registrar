@@ -1,0 +1,13 @@
+div(data-role='page', id='course_desc')
+  header(data-role='header')
+    a(href=ucla_back_link, data-icon='arrow-l', data-direction='reverse', rel='external')
+      = "Back"
+    h1="Course Description"
+  div(data-role='content')
+    - if(ucla_desp.length)
+      p=ucla_desp
+  p
+    a(href=ucla_back_link, data-role='button', data-theme='b', rel='external', data-direction='reverse', rel='external')
+      ='Back'
+  div(data-role='footer', data-theme='d', role='contentinfo', class='footer-docs')
+    p='&copy; 2011 Daifu Ye'

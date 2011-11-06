@@ -1,0 +1,40 @@
+div(data-role='page', id='course_main')
+  header(data-role='header')
+    a(href="/uclaregistrar/"+ucla_term+"/"+ucla_subject, data-icon='arrow-l', data-direction='reverse', rel='external')
+      ="Back"
+    h1="Class Details"
+  div(data-role='content', role='main')
+    //check
+    - if (ucla_course_title.length)
+      h3=ucla_course_title+' FOR 20'+ucla_term
+    - if (ucla_course_desc.length)
+      ul(data-role='listview', data-inset='true', data-theme='d', data-divider-theme='d', class='ui-listview ui-listview-inset ui-corner-all ui-shadow')
+        li(data-role='list-divider', role='heading')
+          h3="Course Description"
+        li
+          a(href=ucla_course_desc_link)
+            ="See the Course Description."
+        - if (ucla_course_note.length)
+          div(data-theme='d', class='ui-body-d ui-li-static ui-li', style='font-weight:normal')
+            p=ucla_course_note
+        - if (ucla_course_sec.length)
+          li(data-role='list-divider', role='heading')
+            h3="Course Sections"
+          - counter = 0
+          - ucla_course_sec.forEach(function(sec){
+            li(data-theme='d')
+              div(data-role='collapsible')
+                - if (sec['instuctor'].length)
+                  h3=sec['section']+', '+sec['instuctor']
+                - else
+                  h3=sec['section']+', STAFF'
+                != partial('classDetail', ucla_course_sec_detail[counter])
+          - counter += 1
+          - })
+    - else
+      h3="Sorry, it is not available now."
+  p
+    a(href="/uclaregistrar/"+ucla_term+"/"+ucla_subject, data-role='button', data-theme='b', data-direction='reverse', rel='external')
+      ='Back'
+  div(data-role='footer', data-theme='d', role='contentinfo', class='footer-docs')
+    p='&copy; 2011 Daifu Ye'

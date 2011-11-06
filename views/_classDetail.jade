@@ -1,0 +1,97 @@
+div(style='font-weight:normal;margin-bottom:10px;')
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='IDNumber:'
+    div(class='ui-block-b')
+      - if (classDetail['IDNumber'].length)
+        div(class='ui-bar ui-bar-e')=classDetail['IDNumber']
+      - else
+        div(class='ui-bar ui-bar-e')="N/A"
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='Days:'
+    div(class='ui-block-b')
+      - if (classDetail['Days'].length)
+        div(class='ui-bar ui-bar-e')=classDetail['Days']
+      - else
+        div(class='ui-bar ui-bar-e')='N/A'
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='Start:'
+    div(class='ui-block-b')
+      - if (classDetail['Start'].length)
+        div(class='ui-bar ui-bar-e')=classDetail['Start']
+      - else
+        div(class='ui-bar ui-bar-e')='N/A'
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='Stop:'
+    div(class='ui-block-b')
+      - if (classDetail['Stop'].length)
+        div(class='ui-bar ui-bar-e')=classDetail['Stop']
+      - else
+        div(class='ui-bar ui-bar-e')='N/A'
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='Building:'
+    div(class='ui-block-b')
+      - if (classDetail['Building'].length)
+        div(class='ui-bar ui-bar-e')=classDetail['Building']
+      - else
+        div(class='ui-bar ui-bar-e')='N/A'
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='Room:'
+    div(class='ui-block-b')
+      - if (classDetail['Room'].length)
+        div(class='ui-bar ui-bar-e')=classDetail['Room']
+      - else
+        div(class='ui-bar ui-bar-e')='N/A'
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='Rest:'
+    div(class='ui-block-b')
+      - if (classDetail['Rest'].length)
+        div(class='ui-bar ui-bar-e')=classDetail['Rest']
+      - else
+        div(class='ui-bar ui-bar-e')='N/A'
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='#En:'
+    div(class='ui-block-b')
+      - if (classDetail['En'].length)
+        div(class='ui-bar ui-bar-e')=classDetail['En']
+      - else
+        div(class='ui-bar ui-bar-e')='N/A'
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='EnCp:'
+    div(class='ui-block-b')
+      - if (classDetail['EnCp'].length)
+        div(class='ui-bar ui-bar-e')=classDetail['EnCp']
+      - else
+        div(class='ui-bar ui-bar-e')='N/A'
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='#WL:'
+    div(class='ui-block-b')
+      - if (classDetail['WL'].length)
+        div(class='ui-bar ui-bar-e')=classDetail['WL']
+      - else
+        div(class='ui-bar ui-bar-e')='N/A'
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='WlCp:'
+    div(class='ui-block-b')
+      - if (classDetail['WlCp'])
+        div(class='ui-bar ui-bar-e')=classDetail['WlCp']
+      - else
+        div(class='ui-bar ui-bar-e')='N/A'
+  div(class='ui-grid-a')
+    div(class='ui-block-a')
+      div(class='ui-bar ui-bar-e')='Status:'
+    div(class='ui-block-b')
+      - if (classDetail['Status'].length)
+        div(class='ui-bar ui-bar-e')=classDetail['Status']
+      - else
+        div(class='ui-bar ui-bar-e')='N/A'
