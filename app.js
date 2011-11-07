@@ -85,8 +85,6 @@ app.get('/uclaregistrar', function(req, res){
             }
          });
 
-         // console.log(terms);
-         // console.log(subjectAreas);
          res.render('index', {
             title: 'UCLA Registrar',
             ucla_terms: terms,
@@ -149,7 +147,6 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
        sub = req.params['subject'],
        classid = req.params['classid'];
    var class_url = 'http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel='+term+'&subareasel='+sub+'&idxcrs='+classid;
-   console.log(class_url);
    //Tell the request that we want to fetch http://www.registrar.ucla.edu/schedule/detselect.aspx
    request({url: class_url}, function(err, response, body){
       //Just a basic error check
@@ -161,7 +158,6 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
          //Use jQuery just as in a regular HTML Page
          var $ = window.jQuery,
              title = $('.SAHeaderDarkGreenBar').text(),
-             course_desc = $('#ctl00_BodyContentPlaceHolder_detselect_lblGeneralNotes').text(),
              course_note = $('#ctl00_BodyContentPlaceHolder_detselect_trClassNotes').text().trim(),
              $course_head = $('.coursehead'),
              course_title = '', course_sec = [], sec_counter = 0,
@@ -260,7 +256,6 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
                   if (!$.isEmptyObject(sec_opt_child)) {
                      sec_opt[sec_opt_counter] = sec_opt_child;
                      delete sec_opt_child;
-                     // console.log(sec_opt_child);
                      sec_opt_counter += 1;
                   };
                }
@@ -270,7 +265,6 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
             tmp_counter += 1;
          })
 
-         console.log(course_desc);
          var course_desc_link = '/uclaregistrar/'+term+'/'+sub+'/'+classid+'/'+IDNum;
 
          res.render('classDetails', {
@@ -278,7 +272,6 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
             ucla_term: term,
             ucla_subject: sub,
             ucla_classid: classid,
-            ucla_course_desc: course_desc,
             ucla_course_note: course_note,
             ucla_course_title: course_title,
             ucla_course_sec: course_sec,
