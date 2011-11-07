@@ -7,7 +7,7 @@ div(data-role='page', id='subjectArea')
     //check
     - if(ucla_classes.length)
       //create a listview wrapper
-      ul(data-role='listview')
+      ul(data-role='listview', data-filter='true')
         //foreach of the collected term
         - ucla_classes.forEach(function(cls){
           li

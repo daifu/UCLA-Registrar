@@ -25,7 +25,7 @@ div(data-role='page')
       //Check
       - if(ucla_subjectAreas.length)
         //list all the subject areas
-        ul(data-role='listview')
+        ul(data-role='listview', data-filter='true')
           //foreach of the collected term
           - ucla_subjectAreas.forEach(function(area){
             li
