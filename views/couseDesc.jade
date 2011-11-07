@@ -7,7 +7,7 @@ div(data-role='page', id='course_desc')
     - if(ucla_desp.length)
       p=ucla_desp
   div(data-role='collapsible', data-theme='a', data-content-theme='a')
-    h3='Go back to other pages'
+    h3(class='more_links')='Go back to other pages'
     - ucla_back_links.forEach(function(bl){
       a(href=bl['link'], data-role='button', data-theme='b', rel='external', data-direction='reverse', data-icon='arrow-r', data-iconpos='right')
         =bl['page']
