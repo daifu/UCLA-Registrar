@@ -47,7 +47,49 @@ if(typeof(String.prototype.strip_tag) === "undefined")
 
 // Routes
 
-app.get('/', routes.index);
+app.get('/', function(req, res){
+   //Tell the request that we want to fetch http://www.registrar.ucla.edu/schedule/schedulehome.aspx
+   request({url: 'http://www.registrar.ucla.edu/schedule/schedulehome.aspx'}, function(err, response, body){
+      //Just a basic error check
+      if (err && response.statusCode !== 200) { console.log('Request error! Not HTTP 200'); };
+      //Send the body param as the HTML code we will parse in jsdom
+      //also tell jsdom to attach jQuery in the scripts and loaded from
+      //jQuery.com
+      jsdom.env({
+         html: body,
+         scripts: ['http://code.jquery.com/jquery-1.6.min.js']
+      }, function(err, window) {
+         //Use jQuery just as in a regular HTML Page
+         var $ = window.jQuery,
+             //Assume the id for the selection not change
+             $term_opts = $('#ctl00_BodyContentPlaceHolder_SOCmain_lstTermDisp').children(),
+             terms = [],
+             $subjetArea_opts = $("#ctl00_BodyContentPlaceHolder_SOCmain_lstSubjectArea").children(),
+             subjectAreas = [];
+
+         $term_opts.each(function(i, v){
+            terms[i] = {
+               'key' : $(v).val(),
+               'name' : $(v).text()
+            }
+         });
+
+         $subjetArea_opts.each(function(i, v){
+            subjectAreas[i] = {
+               // Convert all the white space into +
+               'key' : $(v).val().replace(/\s/g, "+"),
+               'name' : $(v).text()
+            }
+         });
+
+         res.render('index', {
+            title: 'UCLA Registrar',
+            ucla_terms: terms,
+            ucla_subjectAreas: subjectAreas
+         });
+      });
+   });
+});
 
 //Start hacking
 app.get('/uclaregistrar', function(req, res){
@@ -98,9 +140,9 @@ app.get('/uclaregistrar', function(req, res){
 //It takes from subject area to class area
 app.get('/uclaregistrar/:term/:subject', function(req, res){
    var term = req.params['term'];
-   var sub = req.params['subject'];
+   var sub = req.params['subject'].replace(/&/g, '%26');
    var subject_url = 'http://www.registrar.ucla.edu/schedule/crsredir.aspx?termsel='+term+'&subareasel='+sub;
-
+   // console.log(subject_url);
    //Tell the request that we want to fetch http://www.registrar.ucla.edu/schedule/crsredir.aspx
    request({url: subject_url}, function(err, response, body){
       //Just a basic error check
@@ -114,6 +156,7 @@ app.get('/uclaregistrar/:term/:subject', function(req, res){
              title = $('#ctl00_BodyContentPlaceHolder_crsredir1_lblSAHeaderNormal').text(),
              $class_opts = $('#ctl00_BodyContentPlaceHolder_crsredir1_lstCourseNormal').children(),
              cls = [];
+
          if (title.length === 0) {
             title = $('#ctl00_BodyContentPlaceHolder_crsredir1_lblSAHeaderTentative').text();
          };
@@ -130,11 +173,22 @@ app.get('/uclaregistrar/:term/:subject', function(req, res){
             }
          });
 
+         var back_links = [
+         {
+            'page': 'Home',
+            'link': '/uclaregistrar'
+         }, 
+         {  
+            'page': 'Subject Areas',
+            'link': '/uclaregistrar#'+term+'page'
+         }];
+
          res.render('subjectArea', {
             ucla_title: title,
             ucla_classes: cls,
             ucla_term: term,
-            ucla_subject: sub
+            ucla_subject: sub,
+            ucla_back_links: back_links
          });
       });
    });
@@ -144,7 +198,7 @@ app.get('/uclaregistrar/:term/:subject', function(req, res){
 //It takes from class area to class details area
 app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
    var term = req.params['term'],
-       sub = req.params['subject'],
+       sub = req.params['subject'].replace(/&/g, '%26'),
        classid = req.params['classid'];
    var class_url = 'http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel='+term+'&subareasel='+sub+'&idxcrs='+classid;
    //Tell the request that we want to fetch http://www.registrar.ucla.edu/schedule/detselect.aspx
@@ -266,6 +320,24 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
          })
 
          var course_desc_link = '/uclaregistrar/'+term+'/'+sub+'/'+classid+'/'+IDNum;
+         var back_links = [
+         {
+            'page': 'Home',
+            'link': '/uclaregistrar'
+         }, 
+         {  
+            'page': 'Subject Areas',
+            'link': '/uclaregistrar#'+term+'page'
+         },
+         {
+            'page': 'Subject',
+            'link': '/uclaregistrar/'+term+'/'+sub
+         },
+         {
+            'page': 'UCLA Class Page',
+            'link': class_url
+         }
+         ];
 
          res.render('classDetails', {
             ucla_title: title,
@@ -276,7 +348,8 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
             ucla_course_title: course_title,
             ucla_course_sec: course_sec,
             ucla_course_sec_detail: sec_opt_wrap,
-            ucla_course_desc_link: course_desc_link
+            ucla_course_desc_link: course_desc_link,
+            ucla_back_links: back_links
          });
       });
    });
@@ -286,7 +359,7 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
 //It takes from class area to class details area
 app.get('/uclaregistrar/:term/:subject/:classid/:idnum', function(req, res){
    var term = req.params['term'],
-       sub = req.params['subject'],
+       sub = req.params['subject'].replace(/&/g, '%26'),
        classid = req.params['classid'],
        idNum = req.params['idnum'];
    var class_url = 'http://www.registrar.ucla.edu/schedule/subdet.aspx?srs='+idNum+'&term='+term+'&session=';
@@ -302,9 +375,34 @@ app.get('/uclaregistrar/:term/:subject/:classid/:idnum', function(req, res){
          var $ = window.jQuery,
              desp = $("#ctl00_BodyContentPlaceHolder_subdet_lblCourseDescription").text().strip_tag(),
              back_link = "/uclaregistrar/"+term+"/"+sub+"/"+classid;
+         
+         
+         var back_links = [
+         {
+            'page': 'Home',
+            'link': '/uclaregistrar'
+         }, 
+         {  
+            'page': 'Subject Areas',
+            'link': '/uclaregistrar#'+term+'page'
+         },
+         {
+            'page': 'Subject',
+            'link': '/uclaregistrar/'+term+'/'+sub
+         },
+         {
+            'page': 'Course Details',
+            'link': '/uclaregistrar/'+term+'/'+sub+'/'+classid
+         },
+         {
+            'page': 'UCLA Class Detail Page',
+            'link': class_url
+         }];
+
          res.render('couseDesc', {
             ucla_desp: desp,
-            ucla_back_link: back_link
+            ucla_back_link: back_link,
+            ucla_back_links: back_links
          })
       });
    });

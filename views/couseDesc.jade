@@ -6,8 +6,11 @@ div(data-role='page', id='course_desc')
   div(data-role='content')
     - if(ucla_desp.length)
       p=ucla_desp
-  p
-    a(href=ucla_back_link, data-role='button', data-theme='b', rel='external', data-direction='reverse', rel='external')
-      ='Back'
+  div(data-role='collapsible', data-theme='a', data-content-theme='a', data-inset='true')
+    h3='Go back to other pages'
+    - ucla_back_links.forEach(function(bl){
+      a(href=bl['link'], data-role='button', data-theme='b', rel='external', data-direction='reverse', data-icon='arrow-r', data-iconpos='right')
+        =bl['page']
+    - })
   div(data-role='footer', data-theme='d', role='contentinfo', class='footer-docs')
     p='&copy; 2011 Daifu Ye'
