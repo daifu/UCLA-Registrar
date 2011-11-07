@@ -80,7 +80,7 @@ app.get('/uclaregistrar', function(req, res){
          $subjetArea_opts.each(function(i, v){
             subjectAreas[i] = {
                // Convert all the white space into +
-               'key' : $(v).val().replace(/\s+/g, "+"),
+               'key' : $(v).val().replace(/\s/g, "+"),
                'name' : $(v).text()
             }
          });
@@ -127,7 +127,7 @@ app.get('/uclaregistrar/:term/:subject', function(req, res){
          $class_opts.each(function(i, v){
             cls[i] = {
                // convert all the white space into +
-               'key' : $(v).val().replace(/\s+/g, "+"),
+               'key' : $(v).val().replace(/\s/g, "+"),
                'name' : $(v).text()
             }
          });
@@ -149,6 +149,7 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
        sub = req.params['subject'],
        classid = req.params['classid'];
    var class_url = 'http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel='+term+'&subareasel='+sub+'&idxcrs='+classid;
+   console.log(class_url);
    //Tell the request that we want to fetch http://www.registrar.ucla.edu/schedule/detselect.aspx
    request({url: class_url}, function(err, response, body){
       //Just a basic error check
@@ -269,7 +270,7 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
             tmp_counter += 1;
          })
 
-         // console.log(sec_opt_wrap);
+         console.log(course_desc);
          var course_desc_link = '/uclaregistrar/'+term+'/'+sub+'/'+classid+'/'+IDNum;
 
          res.render('classDetails', {
