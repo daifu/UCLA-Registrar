@@ -1,6 +1,6 @@
 div(data-role='page', id='course_main')
   header(data-role='header')
-    a(href="/uclaregistrar/"+ucla_term+"/"+ucla_subject, data-icon='arrow-l', data-direction='reverse', rel='external')
+    a(href="/uclaregistrar/"+ucla_term+"/"+ucla_subject, data-icon='arrow-l', data-direction='reverse')
       ="Back"
     h1="Class Details"
   div(data-role='content', role='main')
@@ -36,7 +36,7 @@ div(data-role='page', id='course_main')
   div(data-role='collapsible', data-theme='a', data-content-theme='a')
     h3(class='more_links')='Go back to other pages'
     - ucla_back_links.forEach(function(bl){
-      a(href=bl['link'], data-role='button', data-theme='b', rel='external', data-direction='reverse', data-icon='arrow-r', data-iconpos='right')
+      a(href=bl['link'], data-role='button', data-theme='b', data-direction='reverse', data-icon='arrow-r', data-iconpos='right')
         =bl['page']
     - })
   div(data-role='footer', data-theme='d', role='contentinfo', class='footer-docs')

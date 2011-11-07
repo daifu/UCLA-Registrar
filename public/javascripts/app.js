@@ -1,3 +1,9 @@
+addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+
+function hideURLbar(){
+  window.scrollTo(0,1);
+}
+
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-26836091-1']);
 _gaq.push(['_trackPageview']);
