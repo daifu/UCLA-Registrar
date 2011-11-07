@@ -317,7 +317,7 @@ app.get('/uclaregistrar/:term/:subject/:classid/:idnum', function(req, res){
 });
 
 
-var port = process.evn.PORT || 3000;
+var port = process.env.PORT || 3000;
 app.listen(port, function() {
    console.log("Listening on " + port);
 });
