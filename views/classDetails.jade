@@ -33,7 +33,7 @@ div(data-role='page', id='course_main')
           - })
     - else
       h3="No classes are scheduled for this subject area this quarter."
-  div(data-role='collapsible', data-theme='a', data-content-theme='a', data-inset='true')
+  div(data-role='collapsible', data-theme='a', data-content-theme='a')
     h3='Go back to other pages'
     - ucla_back_links.forEach(function(bl){
       a(href=bl['link'], data-role='button', data-theme='b', rel='external', data-direction='reverse', data-icon='arrow-r', data-iconpos='right')
