@@ -445,6 +445,7 @@ app.get('/uclaregistrar/:term/:subject/:classid/prof/:prof', function(req, res){
          //Use jQuery just as in a regular HTML Page
          var $ = window.jQuery,
              $avgs = $('#ratings_average').find('.graph'),
+             depart = $($('.breadcrumbs li')[2]).text().replace(/\//, ''),
              avgs_key = [
                  'Effective',
                  'Easy',
@@ -520,6 +521,7 @@ app.get('/uclaregistrar/:term/:subject/:classid/prof/:prof', function(req, res){
          var bruin_walk_link = prof_url;
          res.render('profReviews', {
             ucla_prof: prof,
+            ucla_depart: depart,
             ucla_avg_reviews: avg_reviews,
             ucla_results: results,
             ucla_back_link: back_link,
