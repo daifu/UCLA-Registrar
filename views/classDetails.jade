@@ -25,6 +25,7 @@ div(data-role='page', id='course_main')
             div(data-role='collapsible', data-theme='b', data-content-theme='b')
               - if (sec['instuctor'].length)
                 h3=sec['section']+', '+sec['instuctor']
+                a(href=ucla_link_to_profs[counter]['link'], data-role='button', data-icon='arrow-r', data-theme='b', data-iconpos='right')="Professor Reviews"
               - else
                 h3=sec['section']+', STAFF'
               != partial('classDetail', ucla_course_sec_detail[counter])

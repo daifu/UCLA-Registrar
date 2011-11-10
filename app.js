@@ -30,6 +30,7 @@ app.configure('production', function(){
 });
 
 //Uitility functions
+//trim all the empty string in the string
 if(typeof(String.prototype.trim) === "undefined")
 {
     String.prototype.trim = function() 
@@ -231,16 +232,21 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
              WLCpClassName = 'dgdClassDataWaitListCap',
              StatusClassName = 'dgdClassDataStatus';
          
+         var link_to_profs = [];
          $course_head.each(function(i, v) {
             var $tmp = $(v);
             if ($tmp.parents('.SAHeaderDarkGreenBar').length > 0) {
                course_title = $(v).text();
             } else if ($tmp.next('.fachead').length > 0) {
+               var instuctor = $tmp.next('.fachead').text().replace(/\s+/g, ""),
+                   instuctor_link = instuctor.split(',')[0];
                course_sec[sec_counter] = {
                   'section': $tmp.text(),
-                  'instuctor': $tmp.next('.fachead').text().replace(/\s+/g, ""),
+                  'instuctor': instuctor,
                   'section_link': $tmp.text().replace(/\s+/g, "")
-               }
+               };
+               link_to_profs[sec_counter] = {
+                  'link': '/uclaregistrar/'+term+'/'+sub+'/'+classid+'/prof/'+instuctor_link};
                sec_counter += 1;
             }
          })
@@ -349,6 +355,7 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
             ucla_course_sec: course_sec,
             ucla_course_sec_detail: sec_opt_wrap,
             ucla_course_desc_link: course_desc_link,
+            ucla_link_to_profs: link_to_profs,
             ucla_back_links: back_links
          });
       });
@@ -408,6 +415,107 @@ app.get('/uclaregistrar/:term/:subject/:classid/:idnum', function(req, res){
    });
 });
 
+//It takes from class area to class details area
+app.get('/uclaregistrar/:term/:subject/:classid/prof/:prof', function(req, res){
+   var term = req.params['term'],
+       sub = req.params['subject'].replace(/&/g, '%26'),
+       classid = req.params['classid'],
+       prof = req.params['prof'];
+   var prof_url = 'http://www.bruinwalk.com/search/professors/?q='+prof;
+   request({url: prof_url}, function(err, response, body){
+      //Just a basic error check
+      if (err && response.statusCode !== 200) { console.log('Request error! Not HTTP 200'); };
+      jsdom.env({
+         html: body,
+         scripts: ['http://code.jquery.com/jquery-1.6.min.js']
+      }, function(err, window) {
+         //Use jQuery just as in a regular HTML Page
+         var $ = window.jQuery,
+             $avgs = $('#ratings_average').find('.graph'),
+             avgs_key = [
+                 'Effective',
+                 'Easy',
+                 'Concerned',
+                 'Available',
+                 'Overall'],
+             avg_reviews = [],
+             avgs_key_len = avgs_key.length - 1;
+         $avgs.each(function(i, v){
+            if (i > avgs_key_len) {
+               return false;
+            };
+            avg_reviews[i] = {
+               'key': avgs_key[i],
+               'value': $(v).text().trim()
+            };
+         });
+         
+         //If there is no result for that professor
+         var $results = $('.result'),
+             results = [],
+             counter = 0;
+         if (avg_reviews.length == 0) {
+            $results.each(function(i, v){
+               var $li = $(v).find('.stats li');
+               var avg_reviews = [];
+               $li.each(function(li, lv){
+                  if (li >= avgs_key_len) {
+                     return false;
+                  };
+                  avg_reviews[li] = {
+                     'key': avgs_key[li],
+                     'value': $(lv).text().replace(/[a-z]+/i, '').trim()
+                  }
+               });
+               avg_reviews[avgs_key_len] = {
+                  'key': avgs_key[avgs_key_len],
+                  'value': $(v).find('.overall').text().replace(/[a-z]+/i, '').trim()
+               };
+               var $prof = $(v).find('h4 a');
+               results[counter] = {
+                  'department': $prof.parent().next().text().trim(),
+                  'prof': $prof.text(),
+                  'reviews': avg_reviews
+               };
+               delete avg_reviews;
+               counter += 1;
+            })
+         };
+
+         // console.log(prof_url);
+         // console.log(results);
+
+         var back_links = [
+         {
+            'page': 'Home',
+            'link': '/uclaregistrar'
+         }, 
+         {  
+            'page': 'Subject Areas',
+            'link': '/uclaregistrar#'+term+'page'
+         },
+         {
+            'page': 'Subject',
+            'link': '/uclaregistrar/'+term+'/'+sub
+         },
+         {
+            'page': 'Course Details',
+            'link': '/uclaregistrar/'+term+'/'+sub+'/'+classid
+         }];
+
+         var back_link = '/uclaregistrar/'+term+'/'+sub+'/'+classid;
+         var bruin_walk_link = prof_url;
+         res.render('profReviews', {
+            ucla_prof: prof,
+            ucla_avg_reviews: avg_reviews,
+            ucla_results: results,
+            ucla_back_link: back_link,
+            ucla_bruin_walk_link: bruin_walk_link,
+            ucla_back_links: back_links
+         });
+      });
+   });
+});
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
