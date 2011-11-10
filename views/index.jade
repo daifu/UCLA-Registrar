@@ -9,32 +9,8 @@ div(data-role='page')
         //foreach of the collected term
         - ucla_terms.forEach(function(term){
           li
-            a(href='#'+term['key']+'page', alt='key')
+            a(href='/uclaregistrar/'+term['key'], alt='key')
               h3=term['name']
         - })
   div(data-role='footer', data-theme='d', role='contentinfo', class='footer-docs')
     p='&copy; 2011 Daifu Ye'
-
-- ucla_terms.forEach(function(term){
-  div(data-role='page', data-url=term['key']+'page', id=term['key']+'page')
-    header(data-role='header')
-      a(href='#terms', data-icon='arrow-l', data-direction='reverse')
-        = "Back"
-      h1='Subject Areas'
-    div(data-role='content')
-      //Check
-      - if(ucla_subjectAreas.length)
-        //list all the subject areas
-        ul(data-role='listview', data-filter='true')
-          //foreach of the collected term
-          - ucla_subjectAreas.forEach(function(area){
-            li
-              a(href='/uclaregistrar/#{term["key"]}/#{area["key"]}', rel='key')
-                h3=area['name']
-          - })
-    p
-      a(href='#terms', data-role='button', data-theme='b', data-direction='reverse')
-        ='Back Home'
-    div(data-role='footer', data-theme='d', role='contentinfo', class='footer-docs')
-      p='&copy; 2011 Daifu Ye'
-- })

@@ -64,9 +64,7 @@ app.get('/', function(req, res){
          var $ = window.jQuery,
              //Assume the id for the selection not change
              $term_opts = $('#ctl00_BodyContentPlaceHolder_SOCmain_lstTermDisp').children(),
-             terms = [],
-             $subjetArea_opts = $("#ctl00_BodyContentPlaceHolder_SOCmain_lstSubjectArea").children(),
-             subjectAreas = [];
+             terms = [];
 
          $term_opts.each(function(i, v){
             terms[i] = {
@@ -75,18 +73,9 @@ app.get('/', function(req, res){
             }
          });
 
-         $subjetArea_opts.each(function(i, v){
-            subjectAreas[i] = {
-               // Convert all the white space into +
-               'key' : $(v).val().replace(/\s/g, "+"),
-               'name' : $(v).text()
-            }
-         });
-
          res.render('index', {
             title: 'UCLA Registrar',
-            ucla_terms: terms,
-            ucla_subjectAreas: subjectAreas
+            ucla_terms: terms
          });
       });
    });
@@ -109,9 +98,7 @@ app.get('/uclaregistrar', function(req, res){
          var $ = window.jQuery,
              //Assume the id for the selection not change
              $term_opts = $('#ctl00_BodyContentPlaceHolder_SOCmain_lstTermDisp').children(),
-             terms = [],
-             $subjetArea_opts = $("#ctl00_BodyContentPlaceHolder_SOCmain_lstSubjectArea").children(),
-             subjectAreas = [];
+             terms = [];
 
          $term_opts.each(function(i, v){
             terms[i] = {
@@ -119,6 +106,33 @@ app.get('/uclaregistrar', function(req, res){
                'name' : $(v).text()
             }
          });
+
+         res.render('index', {
+            title: 'UCLA Registrar',
+            ucla_terms: terms
+         });
+      });
+   });
+});
+
+app.get('/uclaregistrar/:term', function(req, res){
+   var term = req.params['term'];
+
+   //Tell the request that we want to fetch http://www.registrar.ucla.edu/schedule/schedulehome.aspx
+   request({url: 'http://www.registrar.ucla.edu/schedule/schedulehome.aspx'}, function(err, response, body){
+      //Just a basic error check
+      if (err && response.statusCode !== 200) { console.log('Request error! Not HTTP 200'); };
+      //Send the body param as the HTML code we will parse in jsdom
+      //also tell jsdom to attach jQuery in the scripts and loaded from
+      //jQuery.com
+      jsdom.env({
+         html: body,
+         scripts: ['http://code.jquery.com/jquery-1.6.min.js']
+      }, function(err, window) {
+         //Use jQuery just as in a regular HTML Page
+         var $ = window.jQuery,
+             $subjetArea_opts = $("#ctl00_BodyContentPlaceHolder_SOCmain_lstSubjectArea").children(),
+             subjectAreas = [];
 
          $subjetArea_opts.each(function(i, v){
             subjectAreas[i] = {
@@ -128,15 +142,14 @@ app.get('/uclaregistrar', function(req, res){
             }
          });
 
-         res.render('index', {
-            title: 'UCLA Registrar',
-            ucla_terms: terms,
+         res.render('courseTerms', {
+            title: 'UCLA Subject Areas',
+            ucla_term: term,
             ucla_subjectAreas: subjectAreas
          });
       });
    });
 });
-
 
 //It takes from subject area to class area
 app.get('/uclaregistrar/:term/:subject', function(req, res){
@@ -181,7 +194,7 @@ app.get('/uclaregistrar/:term/:subject', function(req, res){
          }, 
          {  
             'page': 'Subject Areas',
-            'link': '/uclaregistrar#'+term+'page'
+            'link': '/uclaregistrar/'+term
          }];
 
          res.render('subjectArea', {
@@ -333,7 +346,7 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
          }, 
          {  
             'page': 'Subject Areas',
-            'link': '/uclaregistrar#'+term+'page'
+            'link': '/uclaregistrar/'+term
          },
          {
             'page': 'Subject',
@@ -391,7 +404,7 @@ app.get('/uclaregistrar/:term/:subject/:classid/:idnum', function(req, res){
          }, 
          {  
             'page': 'Subject Areas',
-            'link': '/uclaregistrar#'+term+'page'
+            'link': '/uclaregistrar/'+term
          },
          {
             'page': 'Subject',
@@ -492,7 +505,7 @@ app.get('/uclaregistrar/:term/:subject/:classid/prof/:prof', function(req, res){
          }, 
          {  
             'page': 'Subject Areas',
-            'link': '/uclaregistrar#'+term+'page'
+            'link': '/uclaregistrar/'+term
          },
          {
             'page': 'Subject',
