@@ -1,0 +1,7 @@
+div(class='ui-body ui-body-d')
+  div(data-role='collapsible', data-theme='a', data-content-theme='a')
+    h3='Go back to other pages'
+    - ucla_back_links.forEach(function(bl){
+    a(href=bl['link'], data-role='button', data-theme='b', data-direction='reverse', data-icon='arrow-r', data-iconpos='right')
+      =bl['page']
+    - })
