@@ -12,5 +12,4 @@ div(data-role='page', data-dom-cache="true")
             a(href='/uclaregistrar/'+term['key'], alt='key')
               h3=term['name']
         - })
-  div(data-role='footer', data-theme='d', role='contentinfo', class='footer-docs')
-    p='&copy; 2011 Daifu Ye'
+  != partial('footer')
