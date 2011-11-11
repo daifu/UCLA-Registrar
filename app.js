@@ -369,7 +369,8 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
             ucla_course_sec_detail: sec_opt_wrap,
             ucla_course_desc_link: course_desc_link,
             ucla_link_to_profs: link_to_profs,
-            ucla_back_links: back_links
+            ucla_back_links: back_links,
+            ucla_class_url: class_url
          });
       });
    });
@@ -420,9 +421,11 @@ app.get('/uclaregistrar/:term/:subject/:classid/:idnum', function(req, res){
          }];
 
          res.render('couseDesc', {
+            ucla_course_title: req.params['subject'].replace(/\+/g, ' ')+' '+classid.replace(/\+/g, ''),
             ucla_desp: desp,
             ucla_back_link: back_link,
-            ucla_back_links: back_links
+            ucla_back_links: back_links,
+            ucla_class_url: class_url
          })
       });
    });

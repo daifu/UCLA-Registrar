@@ -9,7 +9,7 @@ div(data-role='page', id='course_main', data-dom-cache="true")
       h3=ucla_course_title+' FOR 20'+ucla_term
     - if (ucla_course_sec.length)
       ul(data-role='listview', data-theme='d', data-divider-theme='d', class='ui-listview ui-corner-all ui-shadow')
-        li(data-role='list-divider', role='heading')
+        li(data-role='list-divider')
           h3="Course Description"
         li
           a(href=ucla_course_desc_link)
@@ -18,7 +18,7 @@ div(data-role='page', id='course_main', data-dom-cache="true")
           div(data-theme='d', class='ui-body-d ui-li-static ui-li', style='font-weight:normal')
             p=ucla_course_note
         - if (ucla_course_sec.length)
-          li(data-role='list-divider', role='heading')
+          li(data-role='list-divider')
             h3="Course Sections"
           - counter = 0
           - ucla_course_sec.forEach(function(sec){
@@ -31,6 +31,11 @@ div(data-role='page', id='course_main', data-dom-cache="true")
               != partial('classDetail', ucla_course_sec_detail[counter])
           - counter += 1
           - })
+          li(data-role='list-divider')
+            h3="Link to Class Page"
+          li(data-theme='c')
+            a(href=ucla_class_url, data-icon='arrow-r', data-iconpos='right')
+              ='Go to Class Page'
     - else
       h3="No classes are scheduled for this subject area this quarter."
   != partial('backlinks')

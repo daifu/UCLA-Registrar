@@ -1,4 +1,4 @@
-div(data-role='page')
+div(data-role='page', data-dom-cache="true")
   header(data-role='header')
     a(href='/uclaregistrar', data-icon='arrow-l', data-direction='reverse')
       = "Back"
@@ -10,9 +10,9 @@ div(data-role='page')
       ul(data-role='listview', data-filter='true')
         //foreach of the collected term
         - ucla_subjectAreas.forEach(function(area){
-          li
-            a(href='/uclaregistrar/#{ucla_term}/#{area["key"]}', rel='key')
-              h3=area['name']
+        li
+          a(href='/uclaregistrar/#{ucla_term}/#{area["key"]}', rel='key')
+            h3=area['name']
         - })
   p
     a(href='/uclaregistrar', data-role='button', data-theme='b', data-direction='reverse')

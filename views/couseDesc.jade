@@ -2,9 +2,16 @@ div(data-role='page', id='course_desc', data-dom-cache="true")
   header(data-role='header')
     a(href=ucla_back_link, data-icon='arrow-l', data-direction='reverse')
       = "Back"
-    h1="Course Description"
+    h1=ucla_course_title
   div(data-role='content')
-    - if(ucla_desp.length)
-      p=ucla_desp
+    ul(data-role='listview', data-inset='true')
+      li(data-role='list-divider')
+        h3="Description"
+      li(data-role='fieldcontain')
+        - if(ucla_desp.length)
+          div(style='font-weight:normal')=ucla_desp
+      li(data-theme='b')
+        a(href=ucla_class_url, data-icon='arrow-r', data-iconpos='right')
+          ="Go to Class Descption Page"
   != partial('backlinks')
   != partial('footer')
