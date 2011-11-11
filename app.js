@@ -293,37 +293,49 @@ app.get('/uclaregistrar/:term/:subject/:classid', function(req, res){
                         case DaysClassName:
                            var days = td_data.children().text().trim();
                            sec_opt_child.Days = days;
+                           break;
                         case StartClassName:
                            var start = td_data.children().text().trim();
                            sec_opt_child.Start = start;
+                           break;
                         case StopClassName:
                            var stop = td_data.children().text().trim();
                            sec_opt_child.Stop = stop;
+                           break;
                         case BuildingClassName:
                            var building = td_data.children().text().trim();
                            sec_opt_child.Building = building;
+                           break;
                         case RoomClassName:
                            var room = td_data.children().text().trim();
                            sec_opt_child.Room = room;
+                           break;
                         case RestClassName:
                            var rest = td_data.children().text().trim();
                            sec_opt_child.Rest = rest;
+                           break;
                         case EnClassName:
                            var en = td_data.children().text().trim();
                            sec_opt_child.En = en;
+                           break;
                         case EnCpClassName:
                            var encp = td_data.children().text().trim();
                            sec_opt_child.EnCp = encp;
+                           break;
                         case WLClassName:
                            var wl = td_data.children().text().trim();
                            sec_opt_child.WL = wl;
+                           break;
                         case WLCpClassName:
                            var wlcp = td_data.children().text().trim();
                            sec_opt_child.WLCp = wlcp;
+                           break;
                         case StatusClassName:
                            var sta = td_data.children().text().trim();
                            sec_opt_child.Status = sta;
+                           break;
                         default:
+                           break;
                      }
                   })
                   if (!$.isEmptyObject(sec_opt_child)) {
