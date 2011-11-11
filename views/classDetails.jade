@@ -8,7 +8,7 @@ div(data-role='page', id='course_main', data-dom-cache="true")
     - if (ucla_course_title.length)
       h3=ucla_course_title+' FOR 20'+ucla_term
     - if (ucla_course_sec.length)
-      ul(data-role='listview', data-theme='d', data-divider-theme='d', class='ui-listview ui-corner-all ui-shadow')
+      ul(data-role='listview', data-theme='d', data-divider-theme='d', data-inset='true')
         li(data-role='list-divider')
           h3="Course Description"
         li
@@ -17,12 +17,16 @@ div(data-role='page', id='course_main', data-dom-cache="true")
         - if (ucla_course_note.length)
           div(data-theme='d', class='ui-body-d ui-li-static ui-li', style='font-weight:normal')
             p=ucla_course_note
+        li(data-icon='mynew-window', data-role='button', data-iconpos='right')
+          a(href=ucla_class_url)
+            ='Go to Class Page'
         - if (ucla_course_sec.length)
           li(data-role='list-divider')
             h3="Course Sections"
           - counter = 0
           - ucla_course_sec.forEach(function(sec){
-            div(data-role='collapsible', data-theme='b', data-content-theme='b')
+          li
+            div(data-role='collapsible', data-theme='b')
               - if (sec['instuctor'].length)
                 h3=sec['section']+', '+sec['instuctor']
                 a(href=ucla_link_to_profs[counter]['link'], data-role='button', data-icon='arrow-r', data-theme='b', data-iconpos='right')="Professor Reviews"
@@ -31,11 +35,6 @@ div(data-role='page', id='course_main', data-dom-cache="true")
               != partial('classDetail', ucla_course_sec_detail[counter])
           - counter += 1
           - })
-          li(data-role='list-divider')
-            h3="Link to Class Page"
-          li(data-theme='c')
-            a(href=ucla_class_url, data-icon='arrow-r', data-iconpos='right')
-              ='Go to Class Page'
     - else
       h3="No classes are scheduled for this subject area this quarter."
   != partial('backlinks')

@@ -10,7 +10,7 @@ div(data-role='page', id='course_desc', data-dom-cache="true")
       li(data-role='fieldcontain')
         - if(ucla_desp.length)
           div(style='font-weight:normal')=ucla_desp
-      li(data-theme='b')
+      li(data-theme='b', data-icon='mynew-window', data-role='button', data-iconpos='right')
         a(href=ucla_class_url, data-icon='arrow-r', data-iconpos='right')
           ="Go to Class Descption Page"
   != partial('backlinks')

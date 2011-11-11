@@ -2,10 +2,10 @@ div(style='margin-bottom:10px;', class='courses_sec')
   - if(ucla_results.length)
     div(style='color:red')="Sorry, more than one result found in BruinWalk"
     - ucla_results.forEach(function(result){
-      ul(data-role='listview', data-inset='true')
-        li(data-role='list-divider')
+      ul(data-role='listview')
+        li(data-role='list-divider', class='ui-bar-d')
           h3=result['prof']+' ('+result['department']+')'
-        li(data-role='fieldcontain')
+        li(data-role='fieldcontain', style='margin-bottom:15px;')
           - result['reviews'].forEach(function(review){
           div(class='ui-grid-a')
             div(class='ui-block-a')
