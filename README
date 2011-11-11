@@ -1,1 +1,5 @@
-<strong>This is a application for UCLA students to findout which class is available and decide which class they want to choose on their phones.</strong>
+This is a application for UCLA students to findout which class is available and decide which class they want to choose on their phones.
+
+This application used nodejs, jsdom, and expressjs libraries.
+
+Example site: http://uclacourse.herokuapp.com/
