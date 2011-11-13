@@ -74,7 +74,7 @@ app.get('/', function(req, res){
          });
 
          res.render('index', {
-            title: 'UCLA Registrar',
+            title: 'UCLA Courses',
             ucla_terms: terms
          });
       });
@@ -108,7 +108,7 @@ app.get('/uclaregistrar', function(req, res){
          });
 
          res.render('index', {
-            title: 'UCLA Registrar',
+            title: 'UCLA Courses',
             ucla_terms: terms
          });
       });
