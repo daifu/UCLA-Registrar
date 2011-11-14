@@ -11,7 +11,7 @@ div(class='courses_sec')
             div(class='ui-block-a')
               div(class='ui-bar ui-bar-e')=review['key']
             div(class='ui-block-b')
-              - if(review['value'].length > 1)
+              - if(review['value'].length > 1 && review['value'] > 0)
                 div(class='ui-bar ui-bar-e', style='width:'+review['value']*10+'%;')
                     =review['value']
               - else
@@ -25,7 +25,7 @@ div(class='courses_sec')
       div(class='ui-block-a')
         div(class='ui-bar ui-bar-e')=review['key']
       div(class='ui-block-b')
-        - if(review['value'].length > 1)
+        - if(review['value'].length > 1 && review['value'] > 0)
           div(class='ui-bar ui-bar-e', style='width:'+review['value']*10+'%;')
               =review['value']
         - else
