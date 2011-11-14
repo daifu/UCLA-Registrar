@@ -9,24 +9,26 @@ div(class='courses_sec')
           - result['reviews'].forEach(function(review){
           div(class='ui-grid-a')
             div(class='ui-block-a')
-              div(class='ui-bar ui-bar-b')=review['key']
+              div(class='ui-bar ui-bar-e')=review['key']
             div(class='ui-block-b')
-              div(class='ui-bar ui-bar-b')
-                - if(review['value'].length > 1)
-                  =review['value']
-                - else
-                  ='N/A'
+              - if(review['value'].length > 1)
+                div(class='ui-bar ui-bar-e', style='width:'+review['value']*10+'%;')
+                    =review['value']
+              - else
+                div(class='ui-bar')
+                    ='N/A'
           - })
       - })
   - else
     - ucla_avg_reviews.forEach(function(review){
     div(class='ui-grid-a')
       div(class='ui-block-a')
-        div(class='ui-bar ui-bar-b')=review['key']
+        div(class='ui-bar ui-bar-e')=review['key']
       div(class='ui-block-b')
-        div(class='ui-bar ui-bar-b')
-          - if(review['value'].length)
-            =review['value']
-          - else
-            ='N/A'
+        - if(review['value'].length > 1)
+          div(class='ui-bar ui-bar-e', style='width:'+review['value']*10+'%;')
+              =review['value']
+        - else
+          div(class='ui-bar')
+              ='N/A'
     - })

@@ -8,7 +8,7 @@ div(data-role='page', id='course_main', data-dom-cache="true")
     - if (ucla_course_title.length)
       h3=ucla_course_title+' FOR 20'+ucla_term
     - if (ucla_course_sec.length)
-      ul(data-role='listview', data-theme='d', data-divider-theme='d', data-inset='true')
+      ul(data-role='listview', data-theme='d', data-divider-theme='b', data-inset='true')
         li(data-role='list-divider')
           h3="Course Description"
         li
@@ -26,10 +26,10 @@ div(data-role='page', id='course_main', data-dom-cache="true")
           - counter = 0
           - ucla_course_sec.forEach(function(sec){
           li
-            div(data-role='collapsible', data-theme='b')
+            div(data-role='collapsible', data-theme='e')
               - if (sec['instuctor'].length)
                 h3=sec['section']+', '+sec['instuctor']
-                a(href=ucla_link_to_profs[counter]['link'], data-role='button', data-icon='arrow-r', data-theme='b', data-iconpos='right')="Professor Reviews"
+                a(href=ucla_link_to_profs[counter]['link'], data-role='button', data-icon='arrow-r', data-theme='e', data-iconpos='right')="Professor Reviews"
               - else
                 h3=sec['section']+', STAFF'
               != partial('classDetail', ucla_course_sec_detail[counter])
