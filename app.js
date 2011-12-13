@@ -61,7 +61,7 @@ app.get('/uclaregistrar', routes.index);
 app.get('/uclaregistrar/:term', function(req, res) {
    var term = req.params['term'];
    parser.term(term, function(error, list){
-      res.render('courseTerms', {
+      res.render('subjectAreas', {
          title: 'UCLA Subject Areas',
          ucla_term: list.term,
          ucla_subjectAreas: list.subjectAreas
