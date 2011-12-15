@@ -1,14 +1,10 @@
-
 /**
  * Module dependencies.
  */
 
 var express = require('express')
   , routes = require('./routes')
-  , jsdom = require('jsdom')
-  , request = require('request')
   , url = require('url')
-  , Courses = require('./lib/courses').Courses
   , Parser = require('./lib/parser').Parser
   , app = module.exports = express.createServer();
 
@@ -53,10 +49,24 @@ if(typeof(String.prototype.strip_tag) === "undefined")
 var parser = new Parser();
 
 // Routes
-app.get('/', routes.index);
+app.get('/', function(req, res){
+   parser.index(function(error, terms){
+      res.render('index', {
+         title: 'UCLA Courses',
+         ucla_terms: terms
+      });
+   });
+});
 
 //Start hacking
-app.get('/uclaregistrar', routes.index);
+app.get('/uclaregistrar', function(req, res){
+   parser.index(function(error, terms){
+      res.render('index', {
+         title: 'UCLA Courses',
+         ucla_terms: terms
+      });
+   });
+});
 
 app.get('/uclaregistrar/:term', function(req, res) {
    var term = req.params['term'];
