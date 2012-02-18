@@ -3,3 +3,6 @@ a {color: #00B7FF;}
 .footer-docs p {float: left;margin-left: 15px;font-weight: normal;font-size: .9em;}
 .courses_sec div {font-weight: normal !important;}
 .ui-icon-mynew-window {background-image: url('../images/new_window.png');}
+.ui-icon-loading {background: url(../images/ajax-loader.gif);}
+.ui-loading .ui-loader {background:none;border:none;}
+.ui-loading .ui-loader > h1{display:none;}
