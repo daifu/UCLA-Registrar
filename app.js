@@ -162,6 +162,11 @@ app.get('/uclaregistrar/:term/:subject/:classid/prof/:prof', function(req, res){
    });
 });
 
+//Create a register page
+app.get('/user/register', function(req, res){
+   res.render('register');
+});
+
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
    console.log("Listening on " + port);

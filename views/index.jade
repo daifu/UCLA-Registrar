@@ -2,7 +2,7 @@ div(data-role='page', data-dom-cache="true")
   header(data-role='header')
     h1=title
   div(data-role='content')
-    //check
+    //check if there is any term
     - if(ucla_terms.length)
       //create a listview wrapper
       ul(data-role='listview')
@@ -12,4 +12,11 @@ div(data-role='page', data-dom-cache="true")
             a(href='/uclaregistrar/'+term['key'], alt='key')
               h3=term['name']
         - })
+        li
+          a(href="/user/register", alt="Register")
+            h3="Register"
+        li
+          a(href="/user/login", alt="Login")
+            h3="Login"
+
   != partial('footer')
