@@ -6,7 +6,8 @@ var express = require('express')
   , routes = require('./routes')
   , url = require('url')
   , Parser = require('./lib/parser').Parser
-  , app = module.exports = express.createServer();
+  , app = module.exports = express.createServer()
+  , Api = require('./lib/api').API;
 
 // Configuration
 
@@ -47,6 +48,7 @@ if(typeof(String.prototype.strip_tag) === "undefined")
 
 //Initial Objects
 var parser = new Parser();
+var api = new API();
 
 // Routes
 app.get('/', function(req, res){
@@ -161,6 +163,67 @@ app.get('/uclaregistrar/:term/:subject/:classid/prof/:prof', function(req, res){
       });
    });
 });
+
+//Provide API calls for the mobile app
+app.get('/api/terms', function(req, res){
+  api.getTerms(function(error, terms){
+    res.send(terms);
+  });
+});
+
+//Provide API calls for the subject areas
+app.get('/api/subject_areas/:term', function(req, res){
+  var term = req.params['term'];
+  api.getSubjectAreas(term, function(error, list){
+    res.send({
+      term: list.term,
+      subject_areas: list.subjectAreas
+    });
+  });
+});
+
+// Provide API calls for the subjects
+app.get('/api/subjects/:term/:subject', function(req, res){
+  var term = req.params['term'];
+  var sub = req.params['subject'].replace(/&/g, '%26');
+  var subject_url = 'http://www.registrar.ucla.edu/schedule/crsredir.aspx?termsel='+term+'&subareasel='+sub;
+  parser.subjects(term, sub, subject_url, function(error, list){
+    res.send({
+      term: list.term,
+      subject: list.sub,
+      classes: list.cls
+    });
+  });
+});
+
+// Provide API calls for the course details
+app.get('/api/course/:term/:subject/:classid', function(req, res){
+   var term = req.params['term'],
+       sub = req.params['subject'].replace(/&/g, '%26'),
+       classid = req.params['classid'];
+   var class_url = 'http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel='+term+'&subareasel='+sub+'&idxcrs='+classid;
+   api.getCourseDetail(term, sub, classid, class_url, function(error, list){
+      res.send({
+         term:               list.term,
+         subject:            list.sub,
+         classid:            list.classid,
+         course_note:        list.course_note,
+         course_title:       list.course_title,
+         course_sec:         list.course_sec,
+         course_sec_detail:  list.sec_opt_wrap,
+         course_desc:        list.course_desc,
+         // course_desc_link:   list.course_desc_link,
+         profs_review:       list.profs_review
+         // link_to_profs:      list.link_to_profs,
+      });
+   });
+})
+
+// Example
+// term: 12F
+// subject: COM+SCI
+// classid: 0035L++
+// idnum: 187105204
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
