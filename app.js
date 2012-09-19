@@ -21,18 +21,18 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.configure('production', function(){
-  app.use(express.errorHandler()); 
+  app.use(express.errorHandler());
 });
 
 //Uitility functions
 //trim all the empty string in the string
 if(typeof(String.prototype.trim) === "undefined")
 {
-    String.prototype.trim = function() 
+    String.prototype.trim = function()
     {
         return String(this).replace(/^\s+|\s+$/g, '');
     };
@@ -43,7 +43,7 @@ if(typeof(String.prototype.strip_tag) === "undefined")
    String.prototype.strip_tag = function()
    {
       return String(this).replace(/(<([^>]+)>)/ig,"");
-   }
+   };
 }
 
 //Initial Objects
@@ -217,7 +217,7 @@ app.get('/api/course/:term/:subject/:classid', function(req, res){
          // link_to_profs:      list.link_to_profs,
       });
    });
-})
+});
 
 // Example
 // term: 12F
@@ -229,4 +229,4 @@ var port = process.env.PORT || 3000;
 app.listen(port, function() {
    console.log("Listening on " + port);
 });
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+console.log("Express server listening on port %d in %s mode", port, app.settings.env);
