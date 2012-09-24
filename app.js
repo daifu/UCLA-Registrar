@@ -224,7 +224,8 @@ app.get('/api/course/:term/:subject/:classid', function(req, res){
 // classid: 0035L++
 // idnum: 187105204
 
-var port = process.env.PORT || 3000;
+// var port = process.env.PORT || 3000;
+var port = 8080;
 app.listen(port, function() {
    console.log("Listening on " + port);
 });
