@@ -219,6 +219,12 @@ app.get('/api/course/:term/:subject/:classid', function(req, res){
    });
 })
 
+// Example
+// term: 12F
+// subject: COM+SCI
+// classid: 0035L++
+// idnum: 187105204
+
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
    console.log("Listening on " + port);
