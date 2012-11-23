@@ -3,7 +3,7 @@
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
-      "express": "2.5.x"
+      "express": "2.5.8"
     , "jade": ">= 0.0.1"
     , "jsdom": ">=0.2.9"
     , "request": ">=2.1.1"
@@ -11,6 +11,6 @@
   },
   "engine": {
     "node": "0.6.13",
-    "npm": "1.1.x"
+    "npm": "1.1.41"
   }
 }
