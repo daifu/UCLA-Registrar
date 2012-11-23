@@ -3,7 +3,7 @@ div(data-role='page', data-dom-cache="true")
     a(href='/uclaregistrar', data-icon='arrow-l', data-direction='reverse')
       = "Back"
     h1='Subject Areas'
-    a(href="#popupMenu", data-icon="grid", class="ui-btn-right", data-rel="popup",data-transition="slidedown")
+    a(href="#popupMenu", data-icon="grid", class="ui-btn-right", data-rel="popup",data-transition="none")
       ="Menu"
     != partial('navbar')
   div(data-role='content')
@@ -14,7 +14,7 @@ div(data-role='page', data-dom-cache="true")
         //foreach of the collected term
         - ucla_subjectAreas.forEach(function(area){
         li
-          a(href='/uclaregistrar/#{ucla_term}/#{area["key"]}', rel='key')
+          a(href='/uclaregistrar/#{ucla_term}/#{area["key"]}', rel='key',data-transition="slide")
             h3=area['name']
         - })
   p

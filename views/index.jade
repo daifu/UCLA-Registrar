@@ -1,7 +1,7 @@
 div(data-role='page', data-dom-cache="true", id="home_page")
   header(data-role='header')
     h1=title
-    a(href="#popupMenu", data-icon="grid", class="ui-btn-right", data-rel="popup",data-transition="slidedown")
+    a(href="#popupMenu", data-icon="grid", class="ui-btn-right", data-rel="popup", data-transition="none")
       ="Menu"
     != partial('navbar')
   div(data-role='content')
@@ -12,7 +12,7 @@ div(data-role='page', data-dom-cache="true", id="home_page")
         //foreach of the collected term
         - ucla_terms.forEach(function(term){
           li
-            a(href='/uclaregistrar/'+term['key'], alt='key')
+            a(href='/uclaregistrar/'+term['key'], alt='key',data-transition="slide")
               h3=term['name']
         - })
   != partial('footer')
