@@ -9,7 +9,7 @@
     , "request": ">=2.1.1"
     , "mongolian": ">=0.1.17"
   },
-  "engine": {
+  "engines": {
     "node": "0.6.13",
     "npm": "1.1.41"
   }
