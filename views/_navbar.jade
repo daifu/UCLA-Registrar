@@ -1,8 +1,10 @@
-div(data-role='navbar', data-iconpos='left')
-  ul
-    li
-      a(href='/', class='ui-btn-active', data-icon='home')='All'
-    li
-      a(href='#', data-icon='star')='Stared'
-    li
-      a(href='#', data-icon='gear')='Notification'
+div(data-role='popup', id="popupMenu", data-shadow="true", aria-disabled="false",data-disabled="false",data-corners="true",data-transition="slidedown",data-dismissable="true", data-position-to="window")
+	a(href="#", data-rel="back",data-role="button",data-theme="a",data-icon="delete",data-iconpos="notext",class="ui-btn-right")
+	ul(data-role="listview", data-inset="true", data-theme="b")
+		li(data-role="divider",data-theme="a")="Menu"
+		li(data-corners="false", data-shadow="false", data-iconshadow="true",data-wrapperels="div",data-icon="home", data-iconpos="left",data-theme="b")
+			a(href="/uclaregistrar",data-transition="fade", data-icon="home", data-iconpos="left")="Home"
+		li(data-corners="false", data-shadow="false", data-iconshadow="true",data-wrapperels="div",data-icon="star", data-iconpos="left",data-theme="b")
+			a(href="/stared",data-transition="fade")="Stared"
+		li(data-corners="false", data-shadow="false", data-iconshadow="true",data-wrapperels="div",data-icon="search", data-iconpos="left",data-theme="b")
+			a(href="/Search",data-transition="fade")="Search"

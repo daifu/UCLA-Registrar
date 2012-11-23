@@ -3,6 +3,9 @@ div(data-role='page', id='subjectArea', data-dom-cache="true")
     a(href="/uclaregistrar/"+ucla_term, data-icon='arrow-l', data-direction='reverse')
       = "Back"
     h1=ucla_title
+    a(href="#popupMenu", data-icon="grid", class="ui-btn-right", data-rel="popup",data-transition="slidedown")
+      ="Menu"
+    != partial('navbar')
   div(data-role='content')
     //check
     - if(ucla_classes.length)

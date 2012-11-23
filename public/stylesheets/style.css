@@ -6,3 +6,4 @@ a {color: #00B7FF;}
 .ui-icon-loading {background: url(../images/ajax-loader.gif);}
 .ui-loading .ui-loader {background:none;border:none;}
 .ui-loading .ui-loader > h1{display:none;}
+#popupMenu ul{min-width: 210px;}

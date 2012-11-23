@@ -1,6 +1,9 @@
-div(data-role='page', data-dom-cache="true")
+div(data-role='page', data-dom-cache="true", id="home_page")
   header(data-role='header')
     h1=title
+    a(href="#popupMenu", data-icon="grid", class="ui-btn-right", data-rel="popup",data-transition="slidedown")
+      ="Menu"
+    != partial('navbar')
   div(data-role='content')
     //check
     - if(ucla_terms.length)
@@ -13,3 +16,16 @@ div(data-role='page', data-dom-cache="true")
               h3=term['name']
         - })
   != partial('footer')
+div(data-role="page", data-dom-cache="true", id="search_page")
+  div(data-role="content")
+    div(data-role="filedcontain")
+      fieldset(data-role="controlgroup")
+        label(for="course_name")='Course Name'
+        input(name="", id="course_name", placeholder="Enter a course name", value="", type="text")
+    div(data-role="filedcontain")
+      label(for="selectmenu1")="Choose a term:"
+      select(data-native-menu="false", name="Term")
+        - if(ucla_terms.length)
+          - ucla_terms.forEach(function(term){
+            option(value=term['key'])=term['name']
+          - })

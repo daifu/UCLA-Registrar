@@ -21,18 +21,18 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.configure('production', function(){
-  app.use(express.errorHandler()); 
+  app.use(express.errorHandler());
 });
 
 //Uitility functions
 //trim all the empty string in the string
 if(typeof(String.prototype.trim) === "undefined")
 {
-    String.prototype.trim = function() 
+    String.prototype.trim = function()
     {
         return String(this).replace(/^\s+|\s+$/g, '');
     };
@@ -43,7 +43,7 @@ if(typeof(String.prototype.strip_tag) === "undefined")
    String.prototype.strip_tag = function()
    {
       return String(this).replace(/(<([^>]+)>)/ig,"");
-   }
+   };
 }
 
 //Initial Objects
@@ -164,6 +164,22 @@ app.get('/uclaregistrar/:term/:subject/:classid/prof/:prof', function(req, res){
    });
 });
 
+//////////////////////////////////////////////////////////////
+/////
+///// Handle Searching
+/////
+//////////////////////////////////////////////////////////////
+// Handle searching requests
+app.get('/uclaregistrar/search', function(req, res){
+  res.render('search_index', {});
+});
+
+
+//////////////////////////////////////////////////////////////
+/////
+///// Handle API Call
+/////
+//////////////////////////////////////////////////////////////
 //Provide API calls for the mobile app
 app.get('/api/terms', function(req, res){
   api.getTerms(function(error, terms){
@@ -217,7 +233,7 @@ app.get('/api/course/:term/:subject/:classid', function(req, res){
          // link_to_profs:      list.link_to_profs,
       });
    });
-})
+});
 
 // Example
 // term: 12F

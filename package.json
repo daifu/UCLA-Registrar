@@ -3,10 +3,14 @@
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
-      "express": "2.5.0"
+      "express": "2.5.x"
     , "jade": ">= 0.0.1"
     , "jsdom": ">=0.2.9"
     , "request": ">=2.1.1"
     , "mongolian": ">=0.1.17"
+  },
+  "engine": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
   }
 }
