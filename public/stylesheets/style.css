@@ -7,3 +7,9 @@ a {color: #00B7FF;}
 .ui-loading .ui-loader {background:none;border:none;}
 .ui-loading .ui-loader > h1{display:none;}
 #popupMenu ul{min-width: 210px;}
+.nav-search .ui-content {margin-top:16px;}
+.nav-search .ui-corner-top {-moz-border-radius: 0;-webkit-border-radius: 0;border-radius: 0;}
+.nav-search .ui-bar-a {background-image:none;background-color:#555;}
+.nav-search .ui-btn-up-a {background-image:none;background-color:#333333;}
+.nav-search .ui-btn-inner {border-top: 1px solid #888;border-color: rgba(255, 255, 255, .1);}
+

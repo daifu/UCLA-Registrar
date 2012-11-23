@@ -32,10 +32,11 @@ app.configure('production', function(){
 //trim all the empty string in the string
 if(typeof(String.prototype.trim) === "undefined")
 {
-    String.prototype.trim = function()
-    {
-        return String(this).replace(/^\s+|\s+$/g, '');
-    };
+    // String.prototype.trim = function()
+    // {
+    //     return String(this).replace(/^\s+|\s+$/g, '');
+    // };
+    String.prototype.trim=function(){return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');};
 }
 
 if(typeof(String.prototype.strip_tag) === "undefined")
@@ -171,14 +172,48 @@ app.get('/uclaregistrar/:term/:subject/:classid/prof/:prof', function(req, res){
 //////////////////////////////////////////////////////////////
 // Handle searching requests
 app.get('/search', function(req, res){
-  api.getAllSubjects(function(error, subjects){
-    if (error) {console.log(error);}
-    else {
-      console.log(subjects);
-      res.render('search', {});
+  api.getTerms(function(error, subjects_by_terms) {
+    if (!error && subjects_by_terms) {
+      api.getAllCoursesDetail(function(error, subjects){
+        if (!error && subjects) {
+          subjects_by_terms.map(function(ele) {
+            ele.subjects = [];
+            return ele;
+          });
+          subjects.map(function(ele){
+            if (ele.title.length > 0) {
+              subjects_by_terms.map(function(term){
+                if (term.key === ele.term) {
+                  term.subjects.push(ele);
+                }
+                // console.log(term);
+                return term;
+              });
+            }
+            return ele;
+          });
+          // console.log(subjects_by_terms);
+          res.render('search', {
+            ucla_subjects: subjects_by_terms
+          });
+        }
+      });
     }
   });
 });
+
+//////////////////////////////////////////////////////////////
+/////
+///// Handle Star
+/////
+//////////////////////////////////////////////////////////////
+// app.get('/star/:term/:subject/:classid', function(req, res){
+//   var term = req.params['term'],
+//       subject = req.params['subject'],
+//       classid = req.params['classid'];
+//   var classUrl = req.headers.host + "/uclaregistrar/"+term+"/"+subject+"/"+classid;
+// });
+
 
 
 //////////////////////////////////////////////////////////////
@@ -244,9 +279,9 @@ app.get('/api/course/:term/:subject/:classid', function(req, res){
 // Populate database with all the UCLA Course
 app.get('/api/populate_db', function(req, res){
   api.populateDB(function(error, list){
-    res.send({
-      courses: list.courses
-    });
+    // res.send({
+    //   courses: list.courses
+    // });
   });
 });
 

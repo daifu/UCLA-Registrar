@@ -1,13 +1,15 @@
-//- div(data-role="page", data-dom-cache="true", id="search_page")
-//-   div(data-role="content")
-//-     div(data-role="filedcontain")
-//-       fieldset(data-role="controlgroup")
-//-         label(for="course_name")='Course Name'
-//-         input(name="", id="course_name", placeholder="Enter a course name", value="", type="text")
-//-     div(data-role="filedcontain")
-//-       label(for="selectmenu1")="Choose a term:"
-//-       select(data-native-menu="false", name="Term")
-//-         - if(ucla_terms.length)
-//-           - ucla_terms.forEach(function(term){
-//-             option(value=term['key'])=term['name']
-//-           - })
+div(data-role="dialog", data-dom-cache="true", data-theme="a")
+  div(data-role="header")
+    h1= "Search"
+  div(data-role="content")
+    //list all the subject areas
+    ul(data-role='listview', data-filter='true')
+      //foreach of the collected term
+      - ucla_subjects.forEach(function(subjects_by_term){
+      li(data-role="list-divider")=subjects_by_term['name']
+        - subjects_by_term['subjects'].forEach(function(course){
+          li
+            a(href='/uclaregistrar/#{course.term}/#{course.sub}/#{course.classid}', rel='key')
+              h3=course['title']
+        - })
+      - })

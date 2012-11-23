@@ -3,6 +3,7 @@ div(data-role='page', id='course_main', data-dom-cache="true")
     a(href="/uclaregistrar/"+ucla_term+"/"+ucla_subject, data-icon='arrow-l', data-direction='reverse')
       ="Back"
     h1="Class Details"
+    a(href="/star/"+ucla_term+"/"+ucla_subject+"/"+ucla_classid, data-icon="star", data-iconpos="notext", data-theme="a",data-trainsition="fade")
   div(data-role='content', role='main')
     //check
     - if (ucla_course_title.length)
