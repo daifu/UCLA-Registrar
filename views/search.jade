@@ -1,6 +1,10 @@
 div(data-role="dialog", data-dom-cache="true", data-theme="a")
   div(data-role="header")
     h1= "Search"
+    a(href="#help", data-rel="popup",data-icon="info", data-iconpos="notext")
+    div(data-role="popup", id="help", data-position-to="window", class="ui-content")
+      a(href="#", data-rel="back", data-role="button", data-icon="delete", data-iconpos="notext", class="ui-btn-right")
+      p="Note: This suggested list is contributed by users history."
   div(data-role="content")
     //list all the subject areas
     ul(data-role='listview', data-filter='true')
