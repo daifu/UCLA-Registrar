@@ -170,8 +170,14 @@ app.get('/uclaregistrar/:term/:subject/:classid/prof/:prof', function(req, res){
 /////
 //////////////////////////////////////////////////////////////
 // Handle searching requests
-app.get('/uclaregistrar/search', function(req, res){
-  res.render('search_index', {});
+app.get('/search', function(req, res){
+  api.getAllSubjects(function(error, subjects){
+    if (error) {console.log(error);}
+    else {
+      console.log(subjects);
+      res.render('search', {});
+    }
+  });
 });
 
 
@@ -233,6 +239,15 @@ app.get('/api/course/:term/:subject/:classid', function(req, res){
          // link_to_profs:      list.link_to_profs,
       });
    });
+});
+
+// Populate database with all the UCLA Course
+app.get('/api/populate_db', function(req, res){
+  api.populateDB(function(error, list){
+    res.send({
+      courses: list.courses
+    });
+  });
 });
 
 // Example
