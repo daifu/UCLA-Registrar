@@ -1,0 +1,15 @@
+div(data-role="dialog", data-dom-cache="true", data-theme="a", data-cache="never")
+  div(data-role="header")
+    h1= "Login"
+  div(data-role="content",data-theme="a")
+    //- div(data-role="popup", data-theme="a",class="ui-content")
+    form(action="/star/save", method="post",data-ajax="false")
+      h3="Please login in with an email"
+        label(for="email", class="ui-hidden-accessible")="Email"
+        input(type="email", name="email", id="email", placeholder="Email")
+        button(type="submit",data-theme="b")="Sign in"
+script
+  $('.ui-icon-delete').bind('click', function(e){
+    var self = $(e.target);
+    self.dialog('close');
+  });

@@ -1,9 +1,9 @@
-div(data-role='page', id='course_main', data-dom-cache="true")
+div(data-role='page', id='course_main', data-ajax="false")
   header(data-role='header')
     a(href="/uclaregistrar/"+ucla_term+"/"+ucla_subject, data-icon='arrow-l', data-direction='reverse')
       ="Back"
     h1="Class Details"
-    a(href="/star/"+ucla_term+"/"+ucla_subject+"/"+ucla_classid, data-icon="star", data-iconpos="notext", data-theme="a",data-trainsition="fade")
+    a(id="star", href="/star/"+ucla_term+"/"+ucla_subject+"/"+ucla_classid, data-icon="star", data-iconpos="notext", data-theme="a",data-trainsition="fade")
   div(data-role='content', role='main')
     //check
     - if (ucla_course_title.length)
@@ -40,3 +40,64 @@ div(data-role='page', id='course_main', data-dom-cache="true")
       h3="No classes are scheduled for this subject area this quarter."
   != partial('backlinks')
   != partial('footer')
+
+script
+  function updateStar(from, to) {
+    var $star = $("#star");
+    $star.removeClass("ui-btn-up-"+from+" ui-btn-hover-"+from).addClass("ui-btn-up-"+to).attr("data-theme", to);
+  }
+  $(document).bind('pagecreate', function(){
+    var starred_courses = localStorage.getItem('starred_courses');
+    var $star = $("#star"),
+        href = $star.attr("href");
+    if(starred_courses) {
+      // if there is local storage
+      starred_courses = JSON.parse(starred_courses);
+      if (starred_courses.indexOf(href) >= 0) {
+        updateStar("b", "e");
+        // refreshPage();
+      }
+    } else {
+      // create a localStroage
+      var starred_courses = [];
+      localStorage.setItem('starred_courses', "[]");
+    }
+
+    // bind tap event
+    $star.bind("click", function(event){
+      var detail = href.split('/'),
+          classid = detail.pop(),
+          subject = detail.pop(),
+          term = detail.pop();
+      var data_to_pass = {
+        "email": localStorage.getItem('email'),
+        "classid": classid,
+        "subject": subject,
+        "term": term
+      }
+      if ($star.attr("data-theme") === "a") {
+        // Send post request to server
+        $.post("/star/add", data_to_pass, function(data){
+          if(data === "saved") {
+            // append the data-theme
+          }
+        }, 'json');
+        starred_courses.push(href);
+        updateStar("a","e");
+        localStorage.setItem('starred_courses', JSON.stringify(starred_courses));
+
+      } else {
+        //- starred_courses.slice(starred_courses.indexOf(href),1);
+        // remove star course
+        $.post("/star/remove", data_to_pass, function(data){
+          if(data === "removed"){}
+        });
+        starred_courses = starred_courses.filter(function(ele){
+          return ele !== href;
+        });
+        updateStar("e","a");
+        localStorage.setItem('starred_courses', JSON.stringify(starred_courses));
+      }
+      return false;
+    });
+  });

@@ -1,6 +1,6 @@
-div(data-role="dialog", data-dom-cache="true", data-theme="a")
+div(data-role="dialog", data-dom-cache="true", data-theme="a", data-cache="never")
   div(data-role="header")
-    h1= "Search History"
+    h1= "Search"
     a(href="#help", data-rel="popup",data-icon="info", data-iconpos="notext")
     div(data-role="popup", id="help", data-position-to="window", class="ui-content")
       a(href="#", data-rel="back", data-role="button", data-icon="delete", data-iconpos="notext", class="ui-btn-right")
@@ -13,7 +13,14 @@ div(data-role="dialog", data-dom-cache="true", data-theme="a")
       li(data-role="list-divider")=subjects_by_term['name']
         - subjects_by_term['subjects'].forEach(function(course){
           li
-            a(href='/uclaregistrar/#{course.term}/#{course.sub}/#{course.classid}', rel='key')
+            a(href='/uclaregistrar/#{course.term}/#{course.sub}/#{course.classid}', rel='key', data-ajax="false")
               h3=course['title']
         - })
       - })
+script
+  var email = localStorage.getItem('email');
+  if (email === undefined || email === null) {
+    //save email
+    email = window.location.href.trim().split('/').pop();
+    localStorage.setItem('email', email);
+  }

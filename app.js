@@ -207,12 +207,70 @@ app.get('/search', function(req, res){
 ///// Handle Star
 /////
 //////////////////////////////////////////////////////////////
-// app.get('/star/:term/:subject/:classid', function(req, res){
-//   var term = req.params['term'],
-//       subject = req.params['subject'],
-//       classid = req.params['classid'];
-//   var classUrl = req.headers.host + "/uclaregistrar/"+term+"/"+subject+"/"+classid;
-// });
+app.post('/star/add', function(req, res){
+  var term = req.body.term,
+      subject = req.body.subject,
+      classid = req.body.classid,
+      email = decodeURIComponent(req.body.email);
+  api.createUserStarred(email, term, subject, classid, function(error, user){
+    if (!error && user) {
+      res.send('saved');
+    } else {
+      console.log(error);
+    }
+  });
+});
+
+app.post('/star/remove', function(req, res){
+  var term = req.body.term,
+      subject = req.body.subject,
+      classid = req.body.classid,
+      email = decodeURIComponent(req.body.email);
+  api.removeUserStarred(email, term, subject, classid, function(error, user){
+    if (!error && user) {
+      res.send('removed');
+    } else {
+      console.log(error);
+    }
+  });
+});
+
+app.get('/star/:email', function(req, res){
+  var email = decodeURIComponent(req.params['email']);
+  if (email === 'null' || email === null || email === undefined) {
+    res.redirect('/login');
+    return;
+  }
+  // get user info
+  api.getUserStarred(email, function(error, list){
+    if (!error && list) {
+      res.render('star', {
+        ucla_subjects: list.courses
+      });
+    } else {
+      res.send("error");
+    }
+  });
+});
+
+app.get('/login', function(req, res){
+  res.render('login');
+});
+
+app.post('/star/save', function(req, res){
+  var email  = decodeURIComponent(req.body.email);
+  if (email === null || email === undefined) {
+    res.redirect('/login');
+  }
+
+  api.createUserStarred(email, null, null, null, function(error, user){
+    if (!error && user) {
+      res.redirect('/star/'+encodeURIComponent(email));
+    } else {
+      res.send("error");
+    }
+  });
+});
 
 
 

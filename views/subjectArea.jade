@@ -14,7 +14,7 @@ div(data-role='page', id='subjectArea', data-dom-cache="true")
         //foreach of the collected term
         - ucla_classes.forEach(function(cls){
           li
-            a(href="/uclaregistrar/"+ucla_term+"/"+ucla_subject+"/"+cls['key'], alt='key',data-transition="slide")
+            a(href="/uclaregistrar/"+ucla_term+"/"+ucla_subject+"/"+cls['key'], alt='key',data-transition="slide",data-ajax="false")
               h3=cls['name']
         - })
     - else
