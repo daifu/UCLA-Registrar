@@ -334,8 +334,10 @@ app.get('/api/course/:term/:subject/:classid', function(req, res){
 });
 
 // Populate database with all the UCLA Course
+// It is dangerous to do that, and it will crash the server
 app.get('/api/populate_db', function(req, res){
   api.populateDB(function(error, list){
+    res.send("DONE");
     // res.send({
     //   courses: list.courses
     // });
