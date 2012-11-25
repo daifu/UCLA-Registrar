@@ -10,7 +10,6 @@ var express = require('express')
   , Api = require('./lib/api').API;
 
 // Configuration
-
 app.configure(function(){
    app.set('views', __dirname + '/views');
    app.set('view engine', 'jade');
