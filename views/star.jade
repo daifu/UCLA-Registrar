@@ -13,14 +13,24 @@ div(data-role="dialog", data-dom-cache="true", data-theme="a", data-cache="never
       li(data-role="list-divider")=subjects_by_term['name']
         - subjects_by_term['subjects'].forEach(function(course){
           li
-            a(href='/uclaregistrar/#{course.term}/#{course.sub}/#{course.classid}', rel='key', data-ajax="false")
+            a(href='/uclaregistrar/#{course.term}/#{course.sub}/#{course.classid}', rel='key', data-ajax="false", class="starred_courses_list")
               h3=course['title']
         - })
       - })
 script
-  var email = localStorage.getItem('email');
-  if (email === undefined || email === null) {
-    //save email
-    email = window.location.href.trim().split('/').pop();
-    localStorage.setItem('email', email);
-  }
+  $(document).bind('pagecreate', function(){
+    var email = localStorage.getItem('email'),
+        starred_courses = localStorage.getItem('starred_courses'),
+        starred_courses_list = $(".starred_courses_list"),
+        hrefs = [];
+    if (email === undefined || email === null) {
+      //save email
+      email = window.location.href.trim().split('/').pop();
+      localStorage.setItem('email', email);
+    }
+
+    starred_courses_list.each(function(index, ele){
+      hrefs.push($(ele).attr("href").replace("uclaregistrar", "star"));
+    });
+    localStorage.setItem("starred_courses", JSON.stringify(hrefs)); // overrite the old one
+  });
