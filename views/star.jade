@@ -17,7 +17,7 @@ div(data-role="dialog", data-dom-cache="true", data-theme="a", data-cache="never
               h3=course['title']
         - })
       - })
-script
+script(type='text/javascript').
   $(document).bind('pagecreate', function(){
     var email = localStorage.getItem('email'),
         starred_courses = localStorage.getItem('starred_courses'),

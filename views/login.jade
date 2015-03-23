@@ -8,7 +8,7 @@ div(data-role="dialog", data-dom-cache="true", data-theme="a", data-cache="never
         label(for="email", class="ui-hidden-accessible")="Email"
         input(type="email", name="email", id="email", placeholder="Email")
         button(type="submit",data-theme="b")="Create Temp Account"
-script
+script(type='text/javascript').
   $('.ui-icon-delete').bind('click', function(e){
     var self = $(e.target);
     self.dialog('close');

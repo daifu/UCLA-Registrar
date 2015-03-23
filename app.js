@@ -350,7 +350,7 @@ app.get('/api/populate_db', function(req, res){
 // classid: 0035L++
 // idnum: 187105204
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3001;
 app.listen(port, function() {
    console.log("Listening on " + port);
 });

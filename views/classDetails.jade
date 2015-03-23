@@ -41,7 +41,7 @@ div(data-role='page', id='course_main', data-ajax="false")
   != partial('backlinks')
   != partial('footer')
 
-script
+script(type='text/javascript').
   function updateStar(from, to) {
     var $star = $("#star");
     $star.removeClass("ui-btn-up-"+from+" ui-btn-hover-"+from).addClass("ui-btn-up-"+to+" ui-btn-hover-"+to).attr("data-theme", to);

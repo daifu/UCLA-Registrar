@@ -8,7 +8,7 @@ div(data-role='popup', id="popupMenu", data-shadow="true", aria-disabled="false"
 			a(href="#star",data-transition="fade",id="starred",data-ajax="false")="Starred"
 		li(data-corners="false", data-shadow="false", data-iconshadow="true",data-wrapperels="div",data-icon="search", data-iconpos="left",data-theme="b")
 			a(href="/search",data-transition="fade")="Search History"
-script
+script(type='text/javascript').
 	var email = 'null';
 	if (localStorage.getItem("email")) {
 		email = localStorage.getItem("email");
